@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 text-white mb-4">Secure Biometric Authentication</h1>
+        <p class="lead text-muted mb-5">Identify presentation attacks with precision. Our lightweight YOLOv8n deep learning framework detects artificial fingerprints made from silicone, gelatin, and latex in real-time.</p>
+        
+        {% if session.get('user') %}
+            <a href="{{ url_for('index') }}" class="btn btn-accent btn-lg px-5 py-3 rounded-pill">Enter Detection Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn btn-accent btn-lg px-5 py-3 rounded-pill me-3">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-accent btn-lg px-5 py-3 rounded-pill">Create Account</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-5 pt-5 text-center">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 bg-transparent">
+            <div class="card-body">
+                <h3 class="h5 text-white">High Accuracy</h3>
+                <p class="text-muted small">Advanced ridge-level analysis captures pore distribution and distortions.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 bg-transparent">
+            <div class="card-body">
+                <h3 class="h5 text-white">Real-Time Speed</h3>
+                <p class="text-muted small">Optimized inference engine provides rapid classification for seamless access.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 bg-transparent">
+            <div class="card-body">
+                <h3 class="h5 text-white">Hardware Independent</h3>
+                <p class="text-muted small">Single-sensor static image analysis requires no specialized hardware.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

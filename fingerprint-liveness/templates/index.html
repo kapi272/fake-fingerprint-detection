@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="text-white">Detection Dashboard</h2>
+        <p class="text-muted">Upload a static fingerprint image for liveness analysis.</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('index') }}" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="imageUpload" class="form-label text-white">Choose Fingerprint Sample</label>
+                        <div class="d-flex">
+                            <input class="form-control me-3" type="file" id="imageUpload" name="image" accept=".jpg,.jpeg,.png" required>
+                            <button type="submit" class="btn btn-accent px-4">Analyze Fingerprint</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if uploaded %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="text-white mb-3">Analysis Results</h3>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Original Image -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header text-center py-3">
+                <span class="text-white">✋ Original Fingerprint</span>
+            </div>
+            <div class="card-body p-4 text-center">
+                <div class="result-img-container">
+                    <img src="{{ original }}" alt="Original Fingerprint" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processed Image -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-accent">
+            <div class="card-header text-center py-3 bg-dark">
+                <span class="text-white">💡 Liveness Detection Result</span>
+            </div>
+            <div class="card-body p-4 text-center">
+                <div class="result-img-container border border-primary">
+                    {% if result %}
+                        <img src="{{ result }}" alt="Processed Fingerprint" class="img-fluid rounded">
+                    {% else %}
+                        <p class="text-muted my-5 py-5">Model processing failed or no model loaded.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Predictions Data -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark">
+                <h5 class="mb-0 text-white"><i class="bi bi-list-check"></i> Predictions</h5>
+            </div>
+            <div class="card-body p-4">
+                {% if predictions %}
+                    {% for pred in predictions %}
+                        {% set is_live = (pred.class.lower() == 'live' or pred.class.lower() == 'real') %}
+                        <div class="alert {% if is_live %}alert-success{% else %}alert-danger{% endif %} d-flex justify-content-between align-items-center mb-2">
+                            <strong>{{ pred.class | upper }}</strong>
+                            <span class="badge bg-dark">Confidence: {{ pred.confidence }}%</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-warning text-center mb-0">
+                        No features detected or YOLOv8n model failed to classify this image.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

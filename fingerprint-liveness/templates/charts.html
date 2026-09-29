@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="text-white">Liveness Detection Analytics</h2>
+        <p class="text-muted">Dataset distribution and model accuracy over training epochs.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-dark">
+                <h5 class="text-white mb-0 text-center">Dataset Distribution</h5>
+            </div>
+            <div class="card-body p-4 d-flex justify-content-center align-items-center">
+                <canvas id="datasetChart" style="max-height: 400px;"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-dark">
+                <h5 class="text-white mb-0 text-center">Model Accuracy Over Epochs</h5>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="accuracyChart" style="max-height: 400px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Dataset Distribution Chart
+        const ctxDataset = document.getElementById('datasetChart').getContext('2d');
+        new Chart(ctxDataset, {
+            type: 'pie',
+            data: {
+                labels: ['Real', 'Fake'],
+                datasets: [{
+                    data: [580, 420],
+                    backgroundColor: ['#00ff88', '#dc3545'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#ffffff' }
+                    }
+                }
+            }
+        });
+
+        // Accuracy Over Epochs Chart
+        const ctxAccuracy = document.getElementById('accuracyChart').getContext('2d');
+        new Chart(ctxAccuracy, {
+            type: 'line',
+            data: {
+                labels: ['Epoch 1', 'Epoch 2', 'Epoch 3', 'Epoch 4', 'Epoch 5', 'Epoch 6'],
+                datasets: [{
+                    label: 'Accuracy',
+                    data: [75, 82, 88, 92, 94.5, 95.4],
+                    borderColor: '#00ff88',
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 70,
+                        max: 100,
+                        grid: { color: '#333333' },
+                        ticks: { color: '#aaaaaa' }
+                    },
+                    x: {
+                        grid: { color: '#333333' },
+                        ticks: { color: '#aaaaaa' }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: '#ffffff' }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

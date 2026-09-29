@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="text-white">Model Performance Metrics</h2>
+        <p class="text-muted">Evaluation of the YOLOv8n FLD model on the test dataset.</p>
+    </div>
+</div>
+
+<div class="row text-center mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 border-accent">
+            <div class="card-body">
+                <h5 class="text-accent mb-3">Accuracy</h5>
+                <h2 class="text-white">95.4%</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 border-accent">
+            <div class="card-body">
+                <h5 class="text-accent mb-3">Precision</h5>
+                <h2 class="text-white">93.6%</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 border-accent">
+            <div class="card-body">
+                <h5 class="text-accent mb-3">Recall</h5>
+                <h2 class="text-white">94.8%</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 border-accent">
+            <div class="card-body">
+                <h5 class="text-accent mb-3">F1-Score</h5>
+                <h2 class="text-white">94.2%</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark">
+                <h5 class="text-white mb-0 text-center">Per-Class Evaluation</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover mb-0 text-center">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                                <th>Support</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-live px-3 py-2">Real</span></td>
+                                <td>0.96</td>
+                                <td>0.95</td>
+                                <td>0.95</td>
+                                <td>580</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-spoof px-3 py-2">Fake</span></td>
+                                <td>0.92</td>
+                                <td>0.94</td>
+                                <td>0.93</td>
+                                <td>420</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

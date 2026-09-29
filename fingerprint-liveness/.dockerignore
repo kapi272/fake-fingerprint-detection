@@ -1,0 +1,13 @@
+.git
+.venv
+__pycache__
+*.py[cod]
+static/uploads/*
+static/results/*
+archive_finger_prints
+yolo_dataset
+runs
+yolov8n.pt
+yolov8n-cls.pt
+prepare_dataset.py
+README.md

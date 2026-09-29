@@ -1,0 +1,120 @@
+:root {
+  --bg-main: #121212;
+  --bg-surface: #1e1e1e;
+  --bg-surface-hover: #2c2c2c;
+  --accent-primary: #00ff88;
+  --accent-primary-hover: #00cc6a;
+  --state-success: #198754;
+  --state-danger: #dc3545;
+  --state-warning: #ffc107;
+  --text-dark: #ffffff;
+  --text-muted: #aaaaaa;
+  --border-color: #333333;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--bg-surface) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+.navbar-brand {
+  color: var(--accent-primary) !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.nav-link {
+  color: var(--text-muted) !important;
+  transition: color 0.2s ease;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--text-dark) !important;
+}
+.btn-outline-accent {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.btn-outline-accent:hover {
+  background-color: var(--accent-primary);
+  color: #000;
+}
+.btn-accent {
+  background-color: var(--accent-primary);
+  color: #000;
+  font-weight: 600;
+}
+.btn-accent:hover {
+  background-color: var(--accent-primary-hover);
+  color: #000;
+}
+
+/* Cards */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.card-header {
+  background-color: rgba(0,0,0,0.2);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+/* Forms */
+.form-control {
+  background-color: #2c2c2c;
+  border: 1px solid var(--border-color);
+  color: var(--text-dark);
+}
+.form-control:focus {
+  background-color: #333;
+  color: var(--text-dark);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.25rem rgba(0, 255, 136, 0.25);
+}
+
+/* Custom Upload Zone */
+.upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  transition: border-color 0.2s, background-color 0.2s;
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.upload-zone:hover {
+  border-color: var(--accent-primary);
+  background-color: rgba(0, 255, 136, 0.05);
+}
+
+/* Images */
+.result-img-container {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+.result-img-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Status badges */
+.badge-live {
+  background-color: var(--state-success);
+  color: white;
+}
+.badge-spoof {
+  background-color: var(--state-danger);
+  color: white;
+}
