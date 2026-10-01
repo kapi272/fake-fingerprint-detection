@@ -3,6 +3,8 @@ from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 from ultralytics.models.yolo.classify.predict import ClassificationPredictor
 from PIL import Image
+import cv2
+import numpy as np
 import torch
 import os
 import uuid
@@ -105,6 +107,36 @@ def logout():
     flash("Logged out successfully", 'info')
     return redirect(url_for('home'))
 
+
+
+def is_valid_fingerprint(image_path):
+    """
+    Validates if the uploaded image has ridge/edge textures characteristic of a fingerprint.
+    Uses Laplacian variance and Sobel gradient magnitude/orientation analysis.
+    """
+    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    if img is None:
+        return False, "Could not read image file."
+    
+    # 1. Check image sharpness/detail using Laplacian variance
+    laplacian_var = cv2.Laplacian(img, cv2.CV_64F).var()
+    if laplacian_var < 35:
+        return False, "Image is too smooth, blurry, or lacks texture details typical of fingerprints."
+
+    # 2. Gradient Orientation & Edge Density Check (Sobel)
+    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)
+    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)
+    magnitude = cv2.magnitude(sobelx, sobely)
+
+    # Calculate proportion of pixels with significant edge gradients (ridge lines)
+    edge_ratio = float(np.sum(magnitude > 40)) / float(img.size)
+
+    # Fingerprint scans typically have an edge density between 0.07 and 0.75
+    if edge_ratio < 0.07 or edge_ratio > 0.75:
+        return False, f"Image texture pattern (edge density: {round(edge_ratio, 2)}) does not match fingerprint characteristics."
+
+    return True, "Valid fingerprint structure detected."
+
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if 'user' not in session:
@@ -126,6 +158,12 @@ def index():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             
+            # Step 1: Pre-validate image structure with OpenCV
+            is_valid, val_msg = is_valid_fingerprint(filepath)
+            if not is_valid:
+                flash(f"Invalid Image: {val_msg} Please upload a valid fingerprint image.", "danger")
+                return redirect(request.url)
+
             parsed_preds = []
             result_image_path = None
             

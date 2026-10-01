@@ -84,11 +84,45 @@ def prepare_yolo_dataset(source_dir, target_dir, split_ratio=0.8):
     print("    ├── Live/")
     print("    └── Fake/")
 
+def add_live_spoof_dataset(source_dir, target_dir, split_ratio=0.8):
+    """
+    Organizes live_spoof dataset into YOLOv8 classification format (80% train / 20% val).
+    'live' -> Live, 'spoof' -> Fake
+    """
+    source_path = Path(source_dir)
+    target_path = Path(target_dir)
+
+    category_map = {'live': 'Live', 'spoof': 'Fake'}
+
+    for src_folder, target_class in category_map.items():
+        folder_path = source_path / src_folder
+        if not folder_path.exists():
+            continue
+
+        images = [f for f in folder_path.iterdir() if f.is_file() and f.suffix.lower() in ['.jpg', '.jpeg', '.png', '.bmp']]
+        random.shuffle(images)
+
+        split_idx = int(len(images) * split_ratio)
+        train_imgs = images[:split_idx]
+        val_imgs = images[split_idx:]
+
+        for split_name, file_list in [('train', train_imgs), ('val', val_imgs)]:
+            dest_dir = target_path / split_name / target_class
+            dest_dir.mkdir(parents=True, exist_ok=True)
+
+            for img_path in file_list:
+                new_name = f"live_spoof_{img_path.name}"
+                shutil.copy2(img_path, dest_dir / new_name)
+
+    print(f"Added images from {source_dir} to {target_dir}")
+
 if __name__ == "__main__":
-    # The path where your extracted dataset is located
     SOURCE_DIRECTORY = "/Users/sam/Desktop/kk/archive_finger_prints"
-    
-    # This is where the formatted YOLO dataset will be saved
+    LIVE_SPOOF_DIRECTORY = "live_spoof"
     TARGET_DIRECTORY = "yolo_dataset" 
     
-    prepare_yolo_dataset(SOURCE_DIRECTORY, TARGET_DIRECTORY)
+    if Path(SOURCE_DIRECTORY).exists():
+        prepare_yolo_dataset(SOURCE_DIRECTORY, TARGET_DIRECTORY)
+    if Path(LIVE_SPOOF_DIRECTORY).exists():
+        add_live_spoof_dataset(LIVE_SPOOF_DIRECTORY, TARGET_DIRECTORY)
+
