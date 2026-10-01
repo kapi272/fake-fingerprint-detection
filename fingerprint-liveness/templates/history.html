@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="text-white">Detection Test History</h2>
+            <p class="text-muted mb-0">View all previously uploaded fingerprint samples and model prediction results.</p>
+        </div>
+        {% if history %}
+        <form method="POST" action="{{ url_for('clear_history') }}" onsubmit="return confirm('Are you sure you want to clear test history?');">
+            <button type="submit" class="btn btn-outline-danger btn-sm">Clear History</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+{% if not history %}
+<div class="row">
+    <div class="col-12 text-center py-5">
+        <div class="card p-5 bg-dark border-secondary">
+            <h4 class="text-muted mb-3">No Test History Found</h4>
+            <p class="text-secondary">Upload fingerprint samples on the Detection page to view history here.</p>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-accent px-4">Go to Detection</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    {% for item in history %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 bg-dark border-secondary">
+            <div class="card-header bg-dark d-flex justify-content-between align-items-center">
+                <span class="badge {% if item.pred_class == 'Live' or item.pred_class == 'Real' %}badge-live{% else %}badge-spoof{% endif %} px-3 py-2">
+                    {{ item.pred_class }} ({{ item.confidence }}%)
+                </span>
+                <small class="text-muted">{{ item.timestamp }}</small>
+            </div>
+            <div class="card-body text-center p-3">
+                <div class="row">
+                    <div class="col-6">
+                        <small class="text-muted d-block mb-1">Uploaded</small>
+                        <img src="{{ item.original_url }}" class="img-fluid rounded border border-secondary" style="max-height: 160px; object-fit: cover;" alt="Original">
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted d-block mb-1">Annotated Result</small>
+                        <img src="{{ item.result_url }}" class="img-fluid rounded border border-secondary" style="max-height: 160px; object-fit: cover;" alt="Result">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -13,7 +13,7 @@
         <div class="card h-100 border-accent">
             <div class="card-body">
                 <h5 class="text-accent mb-3">Accuracy</h5>
-                <h2 class="text-white">95.4%</h2>
+                <h2 class="text-white">{{ metrics.accuracy }}%</h2>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="card h-100 border-accent">
             <div class="card-body">
                 <h5 class="text-accent mb-3">Precision</h5>
-                <h2 class="text-white">93.6%</h2>
+                <h2 class="text-white">{{ metrics.precision }}%</h2>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="card h-100 border-accent">
             <div class="card-body">
                 <h5 class="text-accent mb-3">Recall</h5>
-                <h2 class="text-white">94.8%</h2>
+                <h2 class="text-white">{{ metrics.recall }}%</h2>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div class="card h-100 border-accent">
             <div class="card-body">
                 <h5 class="text-accent mb-3">F1-Score</h5>
-                <h2 class="text-white">94.2%</h2>
+                <h2 class="text-white">{{ metrics.f1_score }}%</h2>
             </div>
         </div>
     </div>
@@ -64,17 +64,17 @@
                         <tbody>
                             <tr>
                                 <td><span class="badge badge-live px-3 py-2">Real</span></td>
-                                <td>0.96</td>
-                                <td>0.95</td>
-                                <td>0.95</td>
-                                <td>580</td>
+                                <td>{{ metrics.real_precision }}</td>
+                                <td>{{ metrics.real_recall }}</td>
+                                <td>{{ metrics.real_f1 }}</td>
+                                <td>{{ metrics.real_support }}</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-spoof px-3 py-2">Fake</span></td>
-                                <td>0.92</td>
-                                <td>0.94</td>
-                                <td>0.93</td>
-                                <td>420</td>
+                                <td>{{ metrics.fake_precision }}</td>
+                                <td>{{ metrics.fake_recall }}</td>
+                                <td>{{ metrics.fake_f1 }}</td>
+                                <td>{{ metrics.fake_support }}</td>
                             </tr>
                         </tbody>
                     </table>

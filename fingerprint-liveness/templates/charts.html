@@ -43,7 +43,7 @@
             data: {
                 labels: ['Real', 'Fake'],
                 datasets: [{
-                    data: [580, 420],
+                    data: [{{ live_count }}, {{ fake_count }}],
                     backgroundColor: ['#00ff88', '#dc3545'],
                     borderWidth: 0
                 }]
@@ -64,10 +64,10 @@
         new Chart(ctxAccuracy, {
             type: 'line',
             data: {
-                labels: ['Epoch 1', 'Epoch 2', 'Epoch 3', 'Epoch 4', 'Epoch 5', 'Epoch 6'],
+                labels: {{ epochs | tojson }},
                 datasets: [{
-                    label: 'Accuracy',
-                    data: [75, 82, 88, 92, 94.5, 95.4],
+                    label: 'Accuracy (%)',
+                    data: {{ accuracies | tojson }},
                     borderColor: '#00ff88',
                     backgroundColor: 'rgba(0, 255, 136, 0.1)',
                     borderWidth: 2,
