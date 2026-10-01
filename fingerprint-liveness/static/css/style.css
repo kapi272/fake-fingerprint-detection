@@ -1,27 +1,57 @@
 :root {
-  --bg-main: #121212;
-  --bg-surface: #1e1e1e;
-  --bg-surface-hover: #2c2c2c;
+  --bg-main: #0d1110;
+  --bg-surface: #171c1a;
+  --bg-surface-hover: #222a27;
   --accent-primary: #00ff88;
-  --accent-primary-hover: #00cc6a;
+  --accent-primary-hover: #20e98b;
   --state-success: #198754;
   --state-danger: #dc3545;
   --state-warning: #ffc107;
   --text-dark: #ffffff;
-  --text-muted: #aaaaaa;
-  --border-color: #333333;
+  --text-muted: #aab8b2;
+  --border-color: #2b3933;
 }
 
 body {
-  background-color: var(--bg-main);
+  min-height: 100vh;
+  background: radial-gradient(circle at 75% -10%, rgba(0, 255, 136, 0.08), transparent 32rem), var(--bg-main);
   color: var(--text-dark);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.95rem;
+}
+
+.text-muted,
+.text-secondary {
+  color: var(--text-muted) !important;
+}
+
+.page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1rem 0 0.25rem;
+}
+.page-heading h1 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.eyebrow {
+  color: var(--accent-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
 }
 
 /* Navbar */
 .navbar {
   background-color: var(--bg-surface) !important;
   border-bottom: 1px solid var(--border-color);
+  min-height: 72px;
 }
 .navbar-brand {
   color: var(--accent-primary) !important;
@@ -30,6 +60,9 @@ body {
 }
 .nav-link {
   color: var(--text-muted) !important;
+  font-size: 0.9rem;
+  padding-left: 0.85rem !important;
+  padding-right: 0.85rem !important;
   transition: color 0.2s ease;
 }
 .nav-link:hover, .nav-link.active {
@@ -47,6 +80,7 @@ body {
   background-color: var(--accent-primary);
   color: #000;
   font-weight: 600;
+  border: 1px solid var(--accent-primary);
 }
 .btn-accent:hover {
   background-color: var(--accent-primary-hover);
@@ -58,6 +92,7 @@ body {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 8px;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.18);
 }
 .card-header {
   background-color: rgba(0,0,0,0.2);
@@ -67,15 +102,83 @@ body {
 
 /* Forms */
 .form-control {
-  background-color: #2c2c2c;
+  background-color: #202824;
   border: 1px solid var(--border-color);
   color: var(--text-dark);
+  min-height: 3.25rem;
+  padding: 0.75rem 0.9rem;
+}
+.form-control::file-selector-button {
+  background: #dce8e2;
+  border: 0;
+  border-right: 1px solid #b7c7bd;
+  color: #101613;
+  cursor: pointer;
+  font-weight: 600;
+  margin: -0.75rem 1rem -0.75rem -0.9rem;
+  padding: 0.75rem 1.15rem;
+}
+.form-control::file-selector-button:hover {
+  background: #ffffff;
 }
 .form-control:focus {
-  background-color: #333;
+  background-color: #25302b;
   color: var(--text-dark);
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 0.25rem rgba(0, 255, 136, 0.25);
+}
+
+.upload-card {
+  max-width: 960px;
+}
+.upload-card .card-body {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.upload-card-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.upload-icon {
+  align-items: center;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.28);
+  border-radius: 8px;
+  color: var(--accent-primary);
+  display: flex;
+  flex: 0 0 2.75rem;
+  font-size: 2rem;
+  height: 2.75rem;
+  justify-content: center;
+  line-height: 1;
+}
+.upload-controls {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+}
+.file-field {
+  flex: 1;
+}
+.file-hint {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.78rem;
+  margin-top: 0.55rem;
+}
+.analyze-button {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.7rem;
+  justify-content: center;
+  min-height: 3.25rem;
+  min-width: 12rem;
+  padding: 0.75rem 1.25rem;
+}
+.button-arrow {
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 /* Custom Upload Zone */
@@ -117,4 +220,23 @@ body {
 .badge-spoof {
   background-color: var(--state-danger);
   color: white;
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .navbar {
+    min-height: 64px;
+  }
+  .upload-controls {
+    flex-direction: column;
+  }
+  .analyze-button {
+    width: 100%;
+  }
+  .form-control {
+    font-size: 0.85rem;
+  }
 }

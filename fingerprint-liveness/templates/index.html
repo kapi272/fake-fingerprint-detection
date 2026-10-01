@@ -1,24 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-12">
-        <h2 class="text-white">Detection Dashboard</h2>
-        <p class="text-muted">Upload a static fingerprint image for liveness analysis.</p>
+<div class="page-heading mb-4">
+    <div>
+        <p class="eyebrow mb-2">LIVENESS ANALYSIS</p>
+        <h1 class="text-white mb-2">Detection Dashboard</h1>
+        <p class="page-subtitle mb-0">Upload a static fingerprint image for liveness analysis.</p>
     </div>
 </div>
 
 <div class="row mb-5">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body p-4">
+    <div class="col-12">
+        <div class="card upload-card">
+            <div class="card-body">
+                <div class="upload-card-heading">
+                    <div class="upload-icon" aria-hidden="true">⌁</div>
+                    <div>
+                        <h2 class="h5 text-white mb-1">Choose a fingerprint sample</h2>
+                        <p class="text-muted mb-0">Use a clear JPG or PNG image with the fingerprint centered in frame.</p>
+                    </div>
+                </div>
                 <form method="POST" action="{{ url_for('index') }}" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="imageUpload" class="form-label text-white">Choose Fingerprint Sample</label>
-                        <div class="d-flex">
-                            <input class="form-control me-3" type="file" id="imageUpload" name="image" accept=".jpg,.jpeg,.png" required>
-                            <button type="submit" class="btn btn-accent px-4">Analyze Fingerprint</button>
+                    <div class="upload-controls">
+                        <div class="file-field">
+                            <label for="imageUpload" class="visually-hidden">Choose fingerprint image</label>
+                            <input class="form-control" type="file" id="imageUpload" name="image" accept=".jpg,.jpeg,.png" required>
+                            <span class="file-hint">Supported formats: JPG, JPEG, PNG</span>
                         </div>
+                        <button type="submit" class="btn btn-accent analyze-button">
+                            <span>Analyze fingerprint</span>
+                            <span class="button-arrow" aria-hidden="true">&#8594;</span>
+                        </button>
                     </div>
                 </form>
             </div>
